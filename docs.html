@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentación & Quickstart | NexusFlow Titanium Edition</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            silver: {
+              50: '#F8FAFC',
+              100: '#F1F5F9',
+              200: '#E2E8F0',
+              300: '#CBD5E1',
+              400: '#94A3B8',
+              500: '#64748B',
+              600: '#475569',
+              700: '#334155',
+            },
+            dark: {
+              950: '#06080C',
+              900: '#0A0D14',
+              850: '#111520',
+              800: '#171D2B',
+              700: '#232A3B',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .text-silver-metallic {
+      background: linear-gradient(135deg, #FFFFFF 15%, #E2E8F0 45%, #94A3B8 75%, #CBD5E1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .shadow-silver-glow {
+      box-shadow: 0 0 35px -5px rgba(226, 232, 240, 0.12);
+    }
+  </style>
+</head>
+<body class="bg-dark-900 text-slate-100 font-sans antialiased selection:bg-silver-200 selection:text-dark-950">
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-dark-900/85 border-b border-dark-700/70">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-silver-400 via-silver-200 to-white flex items-center justify-center shadow-silver-glow">
+          <i data-lucide="shield" class="w-5 h-5 text-dark-950 fill-dark-950"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+            NexusFlow
+            <span class="text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-silver-200/10 text-silver-200 border border-silver-300/30 font-mono">Titanium</span>
+          </span>
+          <span class="text-[11px] text-silver-400 -mt-1 font-mono">Silver Edition</span>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-silver-300">
+        <a href="index.html#demo" class="hover:text-white transition-colors">Editor Visual</a>
+        <a href="features.html" class="hover:text-white transition-colors">Características</a>
+        <a href="pricing.html" class="hover:text-white transition-colors">Precios</a>
+        <a href="docs.html" class="text-white border-b-2 border-white pb-1 font-semibold">Docs & API</a>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <a href="pricing.html" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-silver-100 to-white hover:from-white hover:to-silver-300 text-dark-950 text-sm font-bold shadow-sm transition-all">
+          Probar Gratis
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- DOCS MAIN LAYOUT -->
+  <main class="max-w-7xl mx-auto px-6 py-16">
+    <div class="flex flex-col lg:flex-row gap-12">
+      
+      <!-- SIDEBAR -->
+      <aside class="w-full lg:w-64 space-y-6 text-sm">
+        <div>
+          <h4 class="font-bold text-white text-xs uppercase font-mono tracking-wider mb-3 text-silver-300">Empezar</h4>
+          <ul class="space-y-2 text-silver-400">
+            <li><a href="#quickstart" class="text-white font-semibold">Inicio Rápido (Docker)</a></li>
+            <li><a href="#docker-compose" class="hover:text-white transition-colors">Docker Compose</a></li>
+            <li><a href="#k8s" class="hover:text-white transition-colors">Kubernetes Helm</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-white text-xs uppercase font-mono tracking-wider mb-3 text-silver-300">Agentes IA</h4>
+          <ul class="space-y-2 text-silver-400">
+            <li><a href="#ai-nodes" class="hover:text-white transition-colors">Nodos de Agente</a></li>
+            <li><a href="#rag" class="hover:text-white transition-colors">Bases Vectoriales (RAG)</a></li>
+            <li><a href="#tools" class="hover:text-white transition-colors">Herramientas Personalizadas</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- CONTENT BODY -->
+      <article class="flex-1 space-y-12">
+        
+        <div>
+          <span class="text-xs font-mono font-bold uppercase text-silver-300 tracking-widest px-3 py-1 rounded-full bg-dark-850 border border-silver-400/30">
+            Guía de Inicio Rápido
+          </span>
+          <h1 class="text-3xl sm:text-5xl font-extrabold text-white mt-4 mb-4">
+            Despliega NexusFlow <span class="text-silver-metallic">en 60 segundos</span>
+          </h1>
+          <p class="text-silver-400 text-base">
+            El motor de NexusFlow Titanium Edition se distribuye como una imagen oficial lista para producción.
+          </p>
+        </div>
+
+        <!-- CODE BLOCK 1 -->
+        <section id="quickstart" class="space-y-4">
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <i data-lucide="terminal" class="w-5 h-5 text-white"></i>
+            1. Ejecutar con Docker
+          </h2>
+          <p class="text-silver-400 text-sm">
+            Abre tu terminal (PowerShell en Windows o Bash en Linux/Mac) y ejecuta:
+          </p>
+          <div class="bg-dark-950 border border-silver-400/20 rounded-2xl p-5 font-mono text-xs text-silver-200 overflow-x-auto shadow-silver-glow">
+            <span class="text-silver-500"># Crea volumen local y arranca el contenedor</span><br>
+            docker run -d --name nexusflow \<br>
+            &nbsp;&nbsp;-p 5678:5678 \<br>
+            &nbsp;&nbsp;-e GENERIC_TIMEZONE=Europe/Madrid \<br>
+            &nbsp;&nbsp;-v ~/.nexusflow:/root/.nexusflow \<br>
+            &nbsp;&nbsp;nexusflow/silver-edition:latest
+          </div>
+        </section>
+
+        <!-- CODE BLOCK 2 -->
+        <section id="docker-compose" class="space-y-4">
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <i data-lucide="layers" class="w-5 h-5 text-white"></i>
+            2. Docker Compose (Con PostgreSQL y Redis)
+          </h2>
+          <p class="text-silver-400 text-sm">
+            Para entornos de producción con alta carga de eventos y almacenamiento persistente:
+          </p>
+          <div class="bg-dark-950 border border-silver-400/20 rounded-2xl p-5 font-mono text-xs text-silver-200 overflow-x-auto shadow-silver-glow">
+<pre>version: '3.8'
+
+services:
+  nexusflow:
+    image: nexusflow/silver-edition:latest
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_DATABASE=nexusflow
+      - DB_POSTGRESDB_USER=nexus
+      - DB_POSTGRESDB_PASSWORD=secret_titanium_key
+    depends_on:
+      - postgres
+      - redis</pre>
+          </div>
+        </section>
+
+      </article>
+
+    </div>
+  </main>
+
+  <footer class="py-12 px-6 border-t border-dark-700/70 text-xs text-silver-500 bg-dark-950">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-6 h-6 rounded-lg bg-white flex items-center justify-center text-dark-950 font-bold">N</div>
+        <span class="font-bold text-silver-200">NexusFlow Titanium</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="index.html" class="hover:text-white transition-colors">Inicio</a>
+        <a href="features.html" class="hover:text-white transition-colors">Características</a>
+        <a href="pricing.html" class="hover:text-white transition-colors">Precios</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>

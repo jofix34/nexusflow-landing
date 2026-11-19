@@ -1,49 +1,31 @@
-# NexusFlow — Landing Page (Alternativa Open-Source estilo n8n)
+# NexusFlow — Titanium Edition (Plata / Silver Branding)
 
-Landing page moderna, responsiva e interactiva para una aplicación de automatización de flujos de trabajo y agentes de IA inspirada en **n8n**, **Zapier** y **Make**.
-
----
-
-## 🚀 Características incluidas en la Landing
-
-1. **Hero Section de Alto Impacto:**
-   - Titular llamativo y propuesta de valor enfocada en desarrolladores.
-   - Botón para copiar el comando de inicio rápido con **Docker** en un solo clic.
-   - Enlace y métricas de GitHub (stars).
-
-2. **Simulador de Flujo de Trabajo Interactivo (Estilo Editor de n8n):**
-   - Lienzo visual con cuadrícula (*grid pattern*) y nodos conectados mediante cables SVG animados.
-   - **Nodos representados:**
-     - `Trigger`: Webhook de Stripe.
-     - `Agente IA`: Clasificador de Leads con Gemini 1.5 Pro.
-     - `Router/Switch`: Bifurcación condicional según calificación del lead.
-     - `Outputs`: Alerta en canal de Slack VIP y persistencia en base de datos PostgreSQL.
-   - **Botón "Ejecutar Flujo":** Simula en tiempo real la animación de datos viajando nodo por nodo con indicadores de estado e inspección JSON interactiva al pulsar cualquier nodo.
-
-3. **Propuesta de Valor & Diferenciadores:**
-   - 100% Autohospedable (*Self-Hosted*) para privacidad total y cumplimiento GDPR/HIPAA.
-   - Nodos nativos de Agentes Autónomos con memoria vectorial (RAG) y LLMs.
-   - Soporte para ejecutar JavaScript y Python nativo dentro de cualquier paso.
-
-4. **Ecosistema de Integraciones:**
-   - Galería de más de 450 servicios compatibles (Stripe, Slack, Postgres, OpenAI, Qdrant, GitHub, etc.).
-
-5. **Tabla de Precios Transparente:**
-   - Nivel Community (Gratis para siempre, self-hosted con ejecuciones ilimitadas).
-   - Nivel Cloud Pro (Gestionado, alta disponibilidad).
-   - Nivel Enterprise (SSO, SLA 99.99%, soporte dedicado).
-
-6. **Preguntas Frecuentes (FAQ) Interactivas:**
-   - Acordeones desplegables con respuestas clave sobre licencias y privacidad.
+Landing page y plataforma web multi-página para una aplicación de automatización de flujos de trabajo y agentes de IA inspirada en **n8n**, rediseñada con una estética **plateada, metálica y premium** (*Titanium Silver Edition*).
 
 ---
 
-## 📂 Cómo ver la Landing Page
+## 💎 Páginas del Proyecto
 
-Puedes abrir directamente el archivo `index.html` en tu navegador web:
+1. [index.html](file:///C:/Users/usuario/.gemini/antigravity/scratch/nexusflow-landing/index.html) — **Página Principal:**
+   - Hero con gradientes metálicos y resplandor plateado (*silver glow*).
+   - Simulador de flujo interactivo con cables y nodos en titanio/cromo.
+   - Puntos de valor arquitectónico.
+2. [features.html](file:///C:/Users/usuario/.gemini/antigravity/scratch/nexusflow-landing/features.html) — **Características:**
+   - Motor asíncrono, integración Git nativa, bóveda de secretos AES-256 y SDKs en Python/Node.
+3. [pricing.html](file:///C:/Users/usuario/.gemini/antigravity/scratch/nexusflow-landing/pricing.html) — **Precios:**
+   - Planes Community (Self-Hosted), Titanium Pro (Cloud) y Enterprise Silver.
+4. [docs.html](file:///C:/Users/usuario/.gemini/antigravity/scratch/nexusflow-landing/docs.html) — **Documentación & Quickstart:**
+   - Guía de despliegue con Docker y Docker Compose para producción.
 
-1. Haz doble clic en el archivo [index.html](file:///C:/Users/usuario/.gemini/antigravity/scratch/nexusflow-landing/index.html).
-2. O ábrelo desde PowerShell:
-   ```powershell
-   Start-Process "C:\Users\usuario\.gemini\antigravity\scratch\nexusflow-landing\index.html"
-   ```
+---
+
+## 🚀 Cómo subir estos cambios a GitHub
+
+En tu ventana de **PowerShell**:
+
+```powershell
+cd "C:\Users\usuario\.gemini\antigravity\scratch\nexusflow-landing"
+git add .
+git commit -m "style: nuevo branding plateado metálico y páginas añadidas"
+git push
+```

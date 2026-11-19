@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Características | NexusFlow Titanium Edition</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            silver: {
+              50: '#F8FAFC',
+              100: '#F1F5F9',
+              200: '#E2E8F0',
+              300: '#CBD5E1',
+              400: '#94A3B8',
+              500: '#64748B',
+              600: '#475569',
+              700: '#334155',
+            },
+            dark: {
+              950: '#06080C',
+              900: '#0A0D14',
+              850: '#111520',
+              800: '#171D2B',
+              700: '#232A3B',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .text-silver-metallic {
+      background: linear-gradient(135deg, #FFFFFF 15%, #E2E8F0 45%, #94A3B8 75%, #CBD5E1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .shadow-silver-glow {
+      box-shadow: 0 0 35px -5px rgba(226, 232, 240, 0.12);
+    }
+  </style>
+</head>
+<body class="bg-dark-900 text-slate-100 font-sans antialiased selection:bg-silver-200 selection:text-dark-950">
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-dark-900/85 border-b border-dark-700/70">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-silver-400 via-silver-200 to-white flex items-center justify-center shadow-silver-glow">
+          <i data-lucide="shield" class="w-5 h-5 text-dark-950 fill-dark-950"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+            NexusFlow
+            <span class="text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-silver-200/10 text-silver-200 border border-silver-300/30 font-mono">Titanium</span>
+          </span>
+          <span class="text-[11px] text-silver-400 -mt-1 font-mono">Silver Edition</span>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-silver-300">
+        <a href="index.html#demo" class="hover:text-white transition-colors">Editor Visual</a>
+        <a href="features.html" class="text-white border-b-2 border-white pb-1 font-semibold">Características</a>
+        <a href="pricing.html" class="hover:text-white transition-colors">Precios</a>
+        <a href="docs.html" class="hover:text-white transition-colors">Docs & API</a>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <a href="pricing.html" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-silver-100 to-white hover:from-white hover:to-silver-300 text-dark-950 text-sm font-bold shadow-sm transition-all">
+          Probar Gratis
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- FEATURES CONTENT -->
+  <main class="max-w-7xl mx-auto px-6 py-20">
+    
+    <div class="text-center max-w-3xl mx-auto mb-20">
+      <span class="text-xs font-mono font-bold uppercase text-silver-300 tracking-widest px-3 py-1 rounded-full bg-dark-850 border border-silver-400/30">
+        Arquitectura Silver
+      </span>
+      <h1 class="text-4xl sm:text-6xl font-extrabold text-white mt-6 mb-4">
+        Todo el poder de la automatización en <span class="text-silver-metallic">un solo motor</span>
+      </h1>
+      <p class="text-silver-400 text-lg">
+        Diseñado sin compromisos para ingenieros, equipos de datos y empresas que buscan soberanía y rendimiento.
+      </p>
+    </div>
+
+    <!-- FEATURE GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+      
+      <div class="rounded-3xl bg-dark-850 border border-silver-400/20 p-8 shadow-silver-glow">
+        <div class="w-12 h-12 rounded-xl bg-silver-200/10 text-white flex items-center justify-center mb-6 border border-silver-400/30">
+          <i data-lucide="cpu" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white mb-3">Motor de Ejecución Asíncrono</h3>
+        <p class="text-silver-400 text-sm leading-relaxed mb-6">
+          Capaz de procesar miles de eventos por segundo con colas distribuidas Redis y ejecuciones en paralelo garantizadas sin cuellos de botella.
+        </p>
+        <div class="bg-dark-900 rounded-xl p-4 font-mono text-xs text-silver-300 border border-dark-700">
+          concurrency: 1000 workers<br>
+          latency: &lt; 8ms event-to-execution
+        </div>
+      </div>
+
+      <div class="rounded-3xl bg-dark-850 border border-silver-400/20 p-8 shadow-silver-glow">
+        <div class="w-12 h-12 rounded-xl bg-silver-200/10 text-white flex items-center justify-center mb-6 border border-silver-400/30">
+          <i data-lucide="git-branch" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white mb-3">Control de Versiones Git Nativo</h3>
+        <p class="text-silver-400 text-sm leading-relaxed mb-6">
+          Sincroniza tus flujos directamente con repositorios GitHub o GitLab. Haz commits, code reviews, PRs y despliega flujos mediante CI/CD.
+        </p>
+        <div class="bg-dark-900 rounded-xl p-4 font-mono text-xs text-silver-300 border border-dark-700">
+          git commit -m "update lead routing logic"<br>
+          git push origin production-workflows
+        </div>
+      </div>
+
+      <div class="rounded-3xl bg-dark-850 border border-silver-400/20 p-8 shadow-silver-glow">
+        <div class="w-12 h-12 rounded-xl bg-silver-200/10 text-white flex items-center justify-center mb-6 border border-silver-400/30">
+          <i data-lucide="key" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white mb-3">Bóveda Cifrada de Credenciales</h3>
+        <p class="text-silver-400 text-sm leading-relaxed mb-6">
+          Cifrado AES-256 en reposo y en tránsito. Conecta tus proveedores de secretos como HashiCorp Vault o AWS Secrets Manager.
+        </p>
+        <div class="bg-dark-900 rounded-xl p-4 font-mono text-xs text-silver-300 border border-dark-700">
+          cipher: AES-256-GCM<br>
+          vault: HashiCorp & AWS KMS integration
+        </div>
+      </div>
+
+      <div class="rounded-3xl bg-dark-850 border border-silver-400/20 p-8 shadow-silver-glow">
+        <div class="w-12 h-12 rounded-xl bg-silver-200/10 text-white flex items-center justify-center mb-6 border border-silver-400/30">
+          <i data-lucide="terminal" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white mb-3">SDKs para Node.js y Python</h3>
+        <p class="text-silver-400 text-sm leading-relaxed mb-6">
+          Define flujos de trabajo como código puro además de la interfaz visual. Exporta e importa JSON declarativo en cualquier momento.
+        </p>
+        <div class="bg-dark-900 rounded-xl p-4 font-mono text-xs text-silver-300 border border-dark-700">
+          import { Flow, Agent } from '@nexusflow/sdk';<br>
+          const flow = new Flow('crm-sync');
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="py-12 px-6 border-t border-dark-700/70 text-xs text-silver-500 bg-dark-950">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-6 h-6 rounded-lg bg-white flex items-center justify-center text-dark-950 font-bold">N</div>
+        <span class="font-bold text-silver-200">NexusFlow Titanium</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="index.html" class="hover:text-white transition-colors">Inicio</a>
+        <a href="pricing.html" class="hover:text-white transition-colors">Precios</a>
+        <a href="docs.html" class="hover:text-white transition-colors">Docs</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>

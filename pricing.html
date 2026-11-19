@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Precios | NexusFlow Titanium Edition</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            silver: {
+              50: '#F8FAFC',
+              100: '#F1F5F9',
+              200: '#E2E8F0',
+              300: '#CBD5E1',
+              400: '#94A3B8',
+              500: '#64748B',
+              600: '#475569',
+              700: '#334155',
+            },
+            dark: {
+              950: '#06080C',
+              900: '#0A0D14',
+              850: '#111520',
+              800: '#171D2B',
+              700: '#232A3B',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .text-silver-metallic {
+      background: linear-gradient(135deg, #FFFFFF 15%, #E2E8F0 45%, #94A3B8 75%, #CBD5E1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .shadow-silver-glow {
+      box-shadow: 0 0 35px -5px rgba(226, 232, 240, 0.15);
+    }
+    .shadow-silver-btn {
+      box-shadow: 0 4px 20px -2px rgba(255, 255, 255, 0.25);
+    }
+  </style>
+</head>
+<body class="bg-dark-900 text-slate-100 font-sans antialiased selection:bg-silver-200 selection:text-dark-950">
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-dark-900/85 border-b border-dark-700/70">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-silver-400 via-silver-200 to-white flex items-center justify-center shadow-silver-glow">
+          <i data-lucide="shield" class="w-5 h-5 text-dark-950 fill-dark-950"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+            NexusFlow
+            <span class="text-[10px] font-semibold uppercase px-2 py-0.5 rounded-full bg-silver-200/10 text-silver-200 border border-silver-300/30 font-mono">Titanium</span>
+          </span>
+          <span class="text-[11px] text-silver-400 -mt-1 font-mono">Silver Edition</span>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-silver-300">
+        <a href="index.html#demo" class="hover:text-white transition-colors">Editor Visual</a>
+        <a href="features.html" class="hover:text-white transition-colors">Características</a>
+        <a href="pricing.html" class="text-white border-b-2 border-white pb-1 font-semibold">Precios</a>
+        <a href="docs.html" class="hover:text-white transition-colors">Docs & API</a>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <a href="pricing.html" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-silver-100 to-white hover:from-white hover:to-silver-300 text-dark-950 text-sm font-bold shadow-silver-btn transition-all">
+          Probar Gratis
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- PRICING TIERS -->
+  <main class="max-w-7xl mx-auto px-6 py-20">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="text-xs font-mono font-bold uppercase text-silver-300 tracking-widest px-3 py-1 rounded-full bg-dark-850 border border-silver-400/30">
+        Tarifas Silver
+      </span>
+      <h1 class="text-4xl sm:text-6xl font-extrabold text-white mt-6 mb-4">
+        Precios transparentes para <span class="text-silver-metallic">cualquier escala</span>
+      </h1>
+      <p class="text-silver-400 text-lg">
+        Sin trampas de costes por paso ni penalizaciones por número de nodos.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch mb-20">
+      
+      <!-- COMMUNITY -->
+      <div class="rounded-3xl bg-dark-850 border border-silver-400/20 p-8 flex flex-col justify-between shadow-silver-glow">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold text-white">Community</h3>
+            <span class="text-xs font-mono bg-dark-700 px-2.5 py-1 rounded-full text-silver-300 border border-silver-400/20">Self-Hosted</span>
+          </div>
+          <p class="text-xs text-silver-400 mb-6">Para ingenieros y proyectos que se alojan en servidores propios.</p>
+          <div class="flex items-baseline gap-1 mb-8">
+            <span class="text-5xl font-extrabold text-white">$0</span>
+            <span class="text-silver-400 text-sm">/ para siempre</span>
+          </div>
+          <ul class="space-y-3.5 text-xs text-silver-300 mb-8">
+            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-white"></i> <strong>Ejecuciones ilimitadas</strong></li>
+            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-white"></i> 450+ Nodos preconstruidos</li>
+            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-white"></i> Licencia Fair-Code</li>
+            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-white"></i> Comunidad Discord</li>
+          </ul>
+        </div>
+        <a href="docs.html" class="w-full py-3 rounded-xl bg-dark-800 hover:bg-dark-700 border border-silver-400/30 text-white font-semibold text-center text-xs transition-colors">
+          Desplegar con Docker
+        </a>
+      </div>
+
+      <!-- TITANIUM CLOUD PRO -->
+      <div class="rounded-3xl bg-gradient-to-b from-dark-800 to-dark-850 border-2 border-white p-8 flex flex-col justify-between relative shadow-silver-glow">
+        <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-white text-dark-950 font-bold text-[11px] tracking-wide uppercase shadow-sm">
+          Titanium Choice
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold text-white">Titanium Pro</h3>
+            <span class="text-xs font-mono bg-white/10 text-white px-2.5 py-1 rounded-full border border-white/20">Managed Cloud</span>
+          </div>
+          <p class="text-xs text-silver-400 mb-6">Infraestructura totalmente administrada con alta disponibilidad.</p>
+          <div class="flex items-baseline gap-1 mb-8">
+            <span class="text-5xl font-extrabold text-white">$29</span>
+            <span class="text-silver-400 text-sm">/ mes</span>
+          </div>
+          <ul class="space-y-3.5 text-xs text-silver-200 mb-8">
+            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-white"></i> <strong>50,000 ejecuciones</strong> al mes</li>
+            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-white"></i> Agentes IA con keys gestionadas</li>
+            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-white"></i> Backups diarios automatizados</li>
+            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-white"></i> Soporte prioritario por email</li>
+          </ul>
+        </div>
+        <a href="#" class="w-full py-3 rounded-xl bg-gradient-to-r from-silver-100 to-white hover:from-white hover:to-silver-300 text-dark-950 font-bold text-center text-xs shadow-silver-btn transition-all">
+          Empezar Prueba de 14 Días
+        </a>
+      </div>
+
+      <!-- ENTERPRISE -->
+      <div class="rounded-3xl bg-dark-850 border border-silver-400/20 p-8 flex flex-col justify-between shadow-silver-glow">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold text-white">Enterprise Silver</h3>
+            <span class="text-xs font-mono bg-dark-700 px-2.5 py-1 rounded-full text-silver-300 border border-silver-400/20">A Medida</span>
+          </div>
+          <p class="text-xs text-silver-400 mb-6">Para empresas globales con auditorías y SLAs estrictos.</p>
+          <div class="flex items-baseline gap-1 mb-8">
+            <span class="text-5xl font-extrabold text-white">Custom</span>
+          </div>
+          <ul class="space-y-3.5 text-xs text-silver-300 mb-8">
+            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-white"></i> SAML SSO, Okta y SCIM</li>
+            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-white"></i> Despliegue VPC dedicado / On-Premise</li>
+            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-white"></i> SLA garantizado del 99.99%</li>
+            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-white"></i> Arquitecto de soluciones asignado</li>
+          </ul>
+        </div>
+        <a href="#" class="w-full py-3 rounded-xl bg-dark-800 hover:bg-dark-700 border border-silver-400/30 text-white font-semibold text-center text-xs transition-colors">
+          Contactar con Ventas
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-12 px-6 border-t border-dark-700/70 text-xs text-silver-500 bg-dark-950">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-6 h-6 rounded-lg bg-white flex items-center justify-center text-dark-950 font-bold">N</div>
+        <span class="font-bold text-silver-200">NexusFlow Titanium</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="index.html" class="hover:text-white transition-colors">Inicio</a>
+        <a href="features.html" class="hover:text-white transition-colors">Características</a>
+        <a href="docs.html" class="hover:text-white transition-colors">Docs</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>
