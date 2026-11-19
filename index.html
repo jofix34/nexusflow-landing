@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusFlow | Plataforma de Automatización de Flujos y Agentes IA</title>
+  <meta name="description" content="Automatiza cualquier proceso conectando más de 400 aplicaciones, APIs y agentes de inteligencia artificial. Open-source, visual y autohospedable.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#fff5f2',
+              100: '#ffe8e1',
+              400: '#ff7754',
+              500: '#ff5722', // n8n-style vibrant coral/orange
+              600: '#ea420f',
+              700: '#c53207',
+            },
+            dark: {
+              950: '#07090E',
+              900: '#0B0F17',
+              850: '#101623',
+              800: '#161F31',
+              700: '#23304A',
+            }
+          },
+          animation: {
+            'pulse-glow': 'pulseGlow 3s infinite',
+            'flow-beam': 'flowBeam 2s linear infinite',
+          },
+          keyframes: {
+            pulseGlow: {
+              '0%, 100%': { opacity: 0.4, transform: 'scale(1)' },
+              '50%': { opacity: 0.8, transform: 'scale(1.05)' },
+            },
+            flowBeam: {
+              '0%': { strokeDashoffset: '100' },
+              '100%': { strokeDashoffset: '0' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Custom canvas dots background */
+    .bg-grid-pattern {
+      background-size: 24px 24px;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    }
+    .connector-line {
+      stroke-dasharray: 6 6;
+      animation: dash 20s linear infinite;
+    }
+    @keyframes dash {
+      to {
+        stroke-dashoffset: -1000;
+      }
+    }
+    /* Smooth node glow transitions */
+    .node-card {
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .node-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(255, 87, 34, 0.2);
+    }
+  </style>
+</head>
+<body class="bg-dark-900 text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white">
+
+  <!-- BACKGROUND GLOWS -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-brand-500/15 rounded-full blur-[140px]"></div>
+    <div class="absolute top-[800px] -left-40 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[140px]"></div>
+    <div class="absolute top-[1600px] -right-40 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[160px]"></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-dark-900/80 border-b border-dark-700/60">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      
+      <!-- LOGO -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-amber-500 flex items-center justify-center shadow-lg shadow-brand-500/30 group-hover:scale-105 transition-transform">
+          <i data-lucide="git-merge" class="w-5 h-5 text-white"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-bold tracking-tight text-white flex items-center gap-1.5">
+            NexusFlow
+            <span class="text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded bg-brand-500/20 text-brand-400 border border-brand-500/30">v3.2</span>
+          </span>
+          <span class="text-[11px] text-slate-400 -mt-1 font-mono">Open-Source Engine</span>
+        </div>
+      </a>
+
+      <!-- DESKTOP NAV -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#demo" class="hover:text-brand-400 transition-colors">Editor Visual</a>
+        <a href="#features" class="hover:text-brand-400 transition-colors">Características</a>
+        <a href="#integrations" class="hover:text-brand-400 transition-colors">Integraciones (450+)</a>
+        <a href="#ai-agents" class="hover:text-brand-400 transition-colors flex items-center gap-1.5">
+          Agentes IA
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        </a>
+        <a href="#pricing" class="hover:text-brand-400 transition-colors">Precios</a>
+        <a href="#docs" class="hover:text-brand-400 transition-colors">Docs</a>
+      </nav>
+
+      <!-- CTA BUTTONS -->
+      <div class="flex items-center gap-4">
+        <a href="https://github.com" target="_blank" class="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-lg bg-dark-800 hover:bg-dark-700 border border-dark-700 text-xs font-mono text-slate-300 transition-all hover:text-white">
+          <i data-lucide="github" class="w-4 h-4"></i>
+          <span>19.4k</span>
+          <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i>
+        </a>
+        <a href="#self-host" class="hidden sm:inline-flex text-xs font-semibold px-4 py-2 text-slate-300 hover:text-white transition-colors">
+          Self-Host
+        </a>
+        <a href="#signup" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white text-sm font-semibold shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 transition-all">
+          Probar Gratis
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="relative pt-12 pb-24 md:pt-20 md:pb-32 px-6 overflow-hidden">
+      <div class="max-w-5xl mx-auto text-center">
+        
+        <!-- BADGE -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-dark-800/80 border border-dark-700 text-xs text-slate-300 backdrop-blur-sm mb-8 hover:border-brand-500/50 transition-colors cursor-pointer">
+          <span class="flex h-2 w-2 rounded-full bg-brand-500"></span>
+          <span class="font-medium text-brand-400">Nuevo:</span>
+          <span>Nodos nativos para orquestar Agentes con LangChain y Gemini</span>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400"></i>
+        </div>
+
+        <!-- HEADLINE -->
+        <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white mb-6 leading-[1.12]">
+          Automatiza cualquier cosa.<br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-amber-400 to-rose-400">
+            Conecta nodos, código e IA.
+          </span>
+        </h1>
+
+        <!-- SUBTITLE -->
+        <p class="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto font-normal leading-relaxed mb-10">
+          La alternativa abierta y extensible a Zapier. Orquesta APIs complejas mediante lienzo visual, inyecta JavaScript o Python nativo, y despliega en tu propia infraestructura o en nuestra nube.
+        </p>
+
+        <!-- CTA ACTIONS -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14">
+          <a href="#demo" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-semibold flex items-center justify-center gap-3 shadow-xl shadow-brand-500/30 transition-all hover:scale-[1.02]">
+            <i data-lucide="play" class="w-5 h-5 fill-white"></i>
+            Probar Demo Interactiva
+          </a>
+          <a href="#quickstart" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-dark-800 hover:bg-dark-700/80 border border-dark-700 text-slate-200 font-semibold flex items-center justify-center gap-3 transition-all hover:border-slate-600">
+            <i data-lucide="terminal" class="w-5 h-5 text-brand-400"></i>
+            Iniciar con Docker (1-Click)
+          </a>
+        </div>
+
+        <!-- QUICK DOCKER TERMINAL PREVIEW -->
+        <div class="max-w-2xl mx-auto bg-dark-950/90 border border-dark-700/80 rounded-2xl p-4 shadow-2xl backdrop-blur-md text-left font-mono text-xs text-slate-300">
+          <div class="flex items-center justify-between pb-3 mb-3 border-b border-dark-800">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+              <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+              <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+              <span class="text-slate-500 ml-2 text-[11px]">terminal ~ bash</span>
+            </div>
+            <button id="copy-btn" onclick="copyDockerCommand()" class="flex items-center gap-1.5 text-[11px] text-slate-400 hover:text-brand-400 transition-colors">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+              <span id="copy-text">Copiar comando</span>
+            </button>
+          </div>
+          <div class="text-slate-400 select-all overflow-x-auto py-1">
+            <span class="text-emerald-400">$</span> docker run -it --rm --name nexusflow -p 5678:5678 -v ~/.nexusflow:/root/.nexusflow nexusflow/nexusflow
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- INTERACTIVE WORKFLOW CANVAS DEMO (SIMULADOR ESTILO N8N) -->
+    <section id="demo" class="py-16 px-6 border-y border-dark-700/60 bg-dark-950/60 relative">
+      <div class="max-w-7xl mx-auto">
+        
+        <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-8 gap-4">
+          <div>
+            <div class="flex items-center gap-2 text-brand-400 text-xs font-mono font-semibold uppercase tracking-wider mb-2">
+              <i data-lucide="layers" class="w-4 h-4"></i>
+              Editor en Tiempo Real
+            </div>
+            <h2 class="text-2xl sm:text-4xl font-bold text-white tracking-tight">
+              Flujos visuales tan potentes como tu código
+            </h2>
+            <p class="text-slate-400 text-sm mt-1 max-w-xl">
+              Haz clic en cualquier nodo para inspeccionar sus datos JSON o pulsa <strong>"Ejecutar Flujo"</strong> para ver los datos viajar en tiempo real.
+            </p>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <button id="run-flow-btn" onclick="runWorkflowSimulation()" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm flex items-center gap-2 shadow-lg shadow-emerald-500/20 transition-all active:scale-95">
+              <i data-lucide="zap" class="w-4 h-4 fill-white"></i>
+              <span>Ejecutar Flujo</span>
+            </button>
+            <button onclick="resetWorkflowSimulation()" class="px-3.5 py-2.5 rounded-xl bg-dark-800 hover:bg-dark-700 border border-dark-700 text-slate-300 text-sm flex items-center gap-2 transition-colors">
+              <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- CANVAS CONTAINER -->
+        <div class="relative w-full rounded-2xl border border-dark-700 bg-dark-900 shadow-2xl overflow-hidden bg-grid-pattern min-h-[560px]">
+          
+          <!-- CANVAS TOP BAR -->
+          <div class="h-12 bg-dark-850/90 border-b border-dark-700/80 px-4 flex items-center justify-between text-xs text-slate-400">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span class="font-mono text-slate-200 font-medium">Flujo: Clasificador_Leads_IA.json</span>
+              <span class="bg-dark-700 px-2 py-0.5 rounded text-[11px] text-slate-300">Activo</span>
+            </div>
+            <div class="flex items-center gap-4 font-mono">
+              <span id="exec-status" class="text-slate-400">Listo para ejecutar</span>
+              <div class="h-4 w-px bg-dark-700"></div>
+              <span>Zoom: 100%</span>
+            </div>
+          </div>
+
+          <!-- THE CANVAS AREA WITH NODES & CONNECTORS -->
+          <div class="relative p-8 md:p-14 overflow-x-auto">
+            
+            <!-- SVG CONNECTING WIRES -->
+            <svg id="canvas-svg" class="absolute inset-0 w-full h-full pointer-events-none z-0" style="min-width: 900px;">
+              <defs>
+                <linearGradient id="beamGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#ff5722" />
+                  <stop offset="100%" stop-color="#10b981" />
+                </linearGradient>
+              </defs>
+
+              <!-- Line 1: Webhook -> IA Agent -->
+              <path id="wire-1" d="M 230 180 C 300 180, 310 180, 380 180" fill="none" stroke="#23304a" stroke-width="3" stroke-linecap="round" />
+              <path id="pulse-1" d="M 230 180 C 300 180, 310 180, 380 180" fill="none" stroke="#ff5722" stroke-width="4" stroke-dasharray="10 100" stroke-linecap="round" class="opacity-0 transition-opacity" />
+
+              <!-- Line 2: IA Agent -> Router -->
+              <path id="wire-2" d="M 590 180 C 650 180, 660 180, 720 180" fill="none" stroke="#23304a" stroke-width="3" stroke-linecap="round" />
+              <path id="pulse-2" d="M 590 180 C 650 180, 660 180, 720 180" fill="none" stroke="#a855f7" stroke-width="4" stroke-dasharray="10 100" stroke-linecap="round" class="opacity-0 transition-opacity" />
+
+              <!-- Line 3A: Router -> Slack (VIP) -->
+              <path id="wire-3a" d="M 930 150 C 990 150, 1000 100, 1060 100" fill="none" stroke="#23304a" stroke-width="3" stroke-linecap="round" />
+              <path id="pulse-3a" d="M 930 150 C 990 150, 1000 100, 1060 100" fill="none" stroke="#10b981" stroke-width="4" stroke-dasharray="10 100" stroke-linecap="round" class="opacity-0 transition-opacity" />
+
+              <!-- Line 3B: Router -> Postgres DB -->
+              <path id="wire-3b" d="M 930 210 C 990 210, 1000 270, 1060 270" fill="none" stroke="#23304a" stroke-width="3" stroke-linecap="round" />
+              <path id="pulse-3b" d="M 930 210 C 990 210, 1000 270, 1060 270" fill="none" stroke="#0ea5e9" stroke-width="4" stroke-dasharray="10 100" stroke-linecap="round" class="opacity-0 transition-opacity" />
+            </svg>
+
+            <!-- NODES GRID -->
+            <div class="relative z-10 flex items-start gap-12" style="min-width: 1250px;">
+              
+              <!-- NODE 1: WEBHOOK TRIGGER -->
+              <div id="node-1" onclick="selectNode('webhook')" class="node-card w-56 rounded-xl bg-dark-850 border-2 border-dark-700 p-4 cursor-pointer relative shadow-xl">
+                <div class="flex items-center justify-between mb-3">
+                  <div class="w-9 h-9 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center border border-brand-500/30">
+                    <i data-lucide="webhook" class="w-5 h-5"></i>
+                  </div>
+                  <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-brand-500/10 text-brand-400 font-semibold">Trigger</span>
+                </div>
+                <h4 class="font-bold text-sm text-white">Stripe Webhook</h4>
+                <p class="text-xs text-slate-400 mt-0.5">Captura evento checkout.session</p>
+                <div class="mt-3 pt-2.5 border-t border-dark-700/80 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                  <span>POST /lead-hook</span>
+                  <span id="badge-1" class="w-2 h-2 rounded-full bg-slate-600"></span>
+                </div>
+                <!-- Anchor Out -->
+                <div class="absolute right-[-7px] top-[50%] -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-brand-500 border-2 border-dark-900"></div>
+              </div>
+
+              <!-- NODE 2: AI AGENT CLASSIFIER -->
+              <div id="node-2" onclick="selectNode('ai')" class="node-card w-56 rounded-xl bg-dark-850 border-2 border-dark-700 p-4 cursor-pointer relative shadow-xl ml-10">
+                <!-- Anchor In -->
+                <div class="absolute left-[-7px] top-[50%] -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-slate-500 border-2 border-dark-900"></div>
+                <div class="flex items-center justify-between mb-3">
+                  <div class="w-9 h-9 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center border border-purple-500/30">
+                    <i data-lucide="sparkles" class="w-5 h-5"></i>
+                  </div>
+                  <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 font-semibold">Agente IA</span>
+                </div>
+                <h4 class="font-bold text-sm text-white">Clasificador Gemini</h4>
+                <p class="text-xs text-slate-400 mt-0.5">Analiza tamaño y puntaje lead</p>
+                <div class="mt-3 pt-2.5 border-t border-dark-700/80 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                  <span>temp: 0.2</span>
+                  <span id="badge-2" class="w-2 h-2 rounded-full bg-slate-600"></span>
+                </div>
+                <!-- Anchor Out -->
+                <div class="absolute right-[-7px] top-[50%] -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-purple-500 border-2 border-dark-900"></div>
+              </div>
+
+              <!-- NODE 3: ROUTER / IF CONDITION -->
+              <div id="node-3" onclick="selectNode('router')" class="node-card w-56 rounded-xl bg-dark-850 border-2 border-dark-700 p-4 cursor-pointer relative shadow-xl ml-10">
+                <!-- Anchor In -->
+                <div class="absolute left-[-7px] top-[50%] -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-slate-500 border-2 border-dark-900"></div>
+                <div class="flex items-center justify-between mb-3">
+                  <div class="w-9 h-9 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30">
+                    <i data-lucide="split" class="w-5 h-5"></i>
+                  </div>
+                  <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 font-semibold">Switch</span>
+                </div>
+                <h4 class="font-bold text-sm text-white">Filtro de Prioridad</h4>
+                <p class="text-xs text-slate-400 mt-0.5">¿Score de Lead &gt; 85?</p>
+                <div class="mt-3 pt-2.5 border-t border-dark-700/80 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                  <span>2 Salidas</span>
+                  <span id="badge-3" class="w-2 h-2 rounded-full bg-slate-600"></span>
+                </div>
+                <!-- Two Anchors Out -->
+                <div class="absolute right-[-7px] top-[32%] w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-dark-900" title="Verdadero"></div>
+                <div class="absolute right-[-7px] top-[68%] w-3.5 h-3.5 rounded-full bg-sky-500 border-2 border-dark-900" title="Falso"></div>
+              </div>
+
+              <!-- COLUMN FOR BRANCH OUTPUTS -->
+              <div class="flex flex-col gap-8 ml-10">
+                
+                <!-- NODE 4A: SLACK NOTIFICATION (VIP) -->
+                <div id="node-4a" onclick="selectNode('slack')" class="node-card w-56 rounded-xl bg-dark-850 border-2 border-dark-700 p-4 cursor-pointer relative shadow-xl">
+                  <!-- Anchor In -->
+                  <div class="absolute left-[-7px] top-[50%] -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-dark-900"></div>
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="w-9 h-9 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+                      <i data-lucide="message-square" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-semibold">Slack VIP</span>
+                  </div>
+                  <h4 class="font-bold text-sm text-white">Canal #ventas-leads</h4>
+                  <p class="text-xs text-slate-400 mt-0.5">Notifica con botón de acción</p>
+                  <div class="mt-3 pt-2.5 border-t border-dark-700/80 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                    <span>@channel alert</span>
+                    <span id="badge-4a" class="w-2 h-2 rounded-full bg-slate-600"></span>
+                  </div>
+                </div>
+
+                <!-- NODE 4B: POSTGRESQL INSERT -->
+                <div id="node-4b" onclick="selectNode('postgres')" class="node-card w-56 rounded-xl bg-dark-850 border-2 border-dark-700 p-4 cursor-pointer relative shadow-xl">
+                  <!-- Anchor In -->
+                  <div class="absolute left-[-7px] top-[50%] -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-sky-500 border-2 border-dark-900"></div>
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="w-9 h-9 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center border border-sky-500/30">
+                      <i data-lucide="database" class="w-5 h-5"></i>
+                    </div>
+                    <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 font-semibold">Database</span>
+                  </div>
+                  <h4 class="font-bold text-sm text-white">Guardar en Postgres</h4>
+                  <p class="text-xs text-slate-400 mt-0.5">Tabla `crm_qualified_leads`</p>
+                  <div class="mt-3 pt-2.5 border-t border-dark-700/80 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                    <span>UPSERT on id</span>
+                    <span id="badge-4b" class="w-2 h-2 rounded-full bg-slate-600"></span>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          <!-- BOTTOM INSPECTOR DRAWER -->
+          <div class="bg-dark-950 border-t border-dark-700 p-5">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <i data-lucide="code" class="w-4 h-4 text-brand-400"></i>
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Inspector de Datos de Nodo:</span>
+                <span id="selected-node-title" class="text-xs font-mono text-brand-400 font-semibold">Stripe Webhook (Trigger)</span>
+              </div>
+              <span class="text-[11px] font-mono text-slate-500">Payload JSON en vivo</span>
+            </div>
+            
+            <pre id="json-viewer" class="bg-dark-900 rounded-xl p-4 font-mono text-xs text-emerald-400 overflow-x-auto border border-dark-800 max-h-44">{
+  "event": "customer.subscription.created",
+  "customer": {
+    "name": "Acme Corp",
+    "email": "carlos@acmecorp.io",
+    "plan": "Enterprise Scale",
+    "mrr_usd": 2400
+  },
+  "timestamp": "2026-11-19T22:30:00Z"
+}</pre>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CORE VALUE PILLARS (POR QUÉ NEXUSFLOW) -->
+    <section id="features" class="py-24 px-6 max-w-7xl mx-auto">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-xs font-mono font-bold uppercase text-brand-400 tracking-widest mb-3">Libertad Total de Ingeniería</h2>
+        <p class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+          Diseñado para desarrolladores que no quieren limitaciones
+        </p>
+        <p class="text-slate-400 mt-4 text-base sm:text-lg">
+          Olvida los límites artificiales por tareas, los entornos cerrados o la imposibilidad de escribir código cuando lo necesitas.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- CARD 1 -->
+        <div class="rounded-2xl bg-dark-850 border border-dark-700/80 p-8 hover:border-brand-500/50 transition-all group">
+          <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <i data-lucide="server" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">100% Autohospedable</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-4">
+            Despliega en tu propio VPS, AWS, GCP o Kubernetes con un comando Docker. Tus datos de clientes y credenciales nunca salen de tu infraestructura.
+          </p>
+          <ul class="text-xs text-slate-300 space-y-2 font-mono">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Cumplimiento GDPR / HIPAA</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Ejecuciones ilimitadas</li>
+          </ul>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="rounded-2xl bg-dark-850 border border-dark-700/80 p-8 hover:border-purple-500/50 transition-all group">
+          <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <i data-lucide="bot" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Agentes IA Nativos</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-4">
+            Combina LLMs como Gemini 1.5, Claude 3.5 y GPT-4 con memoria vectorial (Pinecone, Qdrant) y herramientas personalizadas para crear agentes autónomos.
+          </p>
+          <ul class="text-xs text-slate-300 space-y-2 font-mono">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-purple-400"></i> Arquitectura RAG out-of-the-box</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-purple-400"></i> Soporte para Function Calling</li>
+          </ul>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="rounded-2xl bg-dark-850 border border-dark-700/80 p-8 hover:border-amber-500/50 transition-all group">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <i data-lucide="code-2" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">JavaScript & Python</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-4">
+            Si un nodo no hace exactamente lo que necesitas, escribe código dentro de cualquier paso con acceso completo a librerías de npm y PyPI.
+          </p>
+          <ul class="text-xs text-slate-300 space-y-2 font-mono">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-amber-400"></i> Depurador paso a paso</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-amber-400"></i> Transformación de datos compleja</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- INTEGRATIONS SHOWCASE -->
+    <section id="integrations" class="py-20 border-t border-dark-700/60 bg-dark-950/40">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-center justify-between mb-12 gap-6">
+          <div>
+            <h2 class="text-xs font-mono font-bold uppercase text-brand-400 tracking-widest mb-2">Ecosistema Abierto</h2>
+            <h3 class="text-3xl font-extrabold text-white">Más de 450 integraciones listas para usar</h3>
+          </div>
+          <div class="relative w-full md:w-72">
+            <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+            <input type="text" placeholder="Buscar app (ej. Stripe, Slack...)" class="w-full bg-dark-850 border border-dark-700 rounded-xl pl-10 pr-4 py-2 text-xs text-slate-200 focus:outline-none focus:border-brand-500">
+          </div>
+        </div>
+
+        <!-- LOGOS GRID -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-4">
+          
+          <div class="p-4 rounded-xl bg-dark-850 border border-dark-700/70 flex items-center gap-3 hover:border-slate-500 transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-[#635BFF]/20 text-[#635BFF] flex items-center justify-center font-bold">S</div>
+            <span class="text-xs font-semibold text-slate-200">Stripe</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-dark-850 border border-dark-700/70 flex items-center gap-3 hover:border-slate-500 transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-[#4A154B]/20 text-rose-400 flex items-center justify-center font-bold">#</div>
+            <span class="text-xs font-semibold text-slate-200">Slack</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-dark-850 border border-dark-700/70 flex items-center gap-3 hover:border-slate-500 transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-[#336791]/20 text-[#336791] flex items-center justify-center font-bold">PG</div>
+            <span class="text-xs font-semibold text-slate-200">PostgreSQL</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-dark-850 border border-dark-700/70 flex items-center gap-3 hover:border-slate-500 transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-[#10A37F]/20 text-[#10A37F] flex items-center justify-center font-bold">AI</div>
+            <span class="text-xs font-semibold text-slate-200">OpenAI</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-dark-850 border border-dark-700/70 flex items-center gap-3 hover:border-slate-500 transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-[#4285F4]/20 text-[#4285F4] flex items-center justify-center font-bold">G</div>
+            <span class="text-xs font-semibold text-slate-200">Google Sheets</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-dark-850 border border-dark-700/70 flex items-center gap-3 hover:border-slate-500 transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-[#24292F]/40 text-slate-200 flex items-center justify-center font-bold">GH</div>
+            <span class="text-xs font-semibold text-slate-200">GitHub</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-dark-850 border border-dark-700/70 flex items-center gap-3 hover:border-slate-500 transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-[#5865F2]/20 text-[#5865F2] flex items-center justify-center font-bold">D</div>
+            <span class="text-xs font-semibold text-slate-200">Discord</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-dark-850 border border-dark-700/70 flex items-center gap-3 hover:border-slate-500 transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold">H</div>
+            <span class="text-xs font-semibold text-slate-200">HubSpot</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-dark-850 border border-dark-700/70 flex items-center gap-3 hover:border-slate-500 transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">S3</div>
+            <span class="text-xs font-semibold text-slate-200">AWS S3</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-dark-850 border border-dark-700/70 flex items-center gap-3 hover:border-slate-500 transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">N</div>
+            <span class="text-xs font-semibold text-slate-200">Notion</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-dark-850 border border-dark-700/70 flex items-center gap-3 hover:border-slate-500 transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold">Q</div>
+            <span class="text-xs font-semibold text-slate-200">Qdrant Vector</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-dark-850 border border-dark-700/70 flex items-center gap-3 hover:border-slate-500 transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">+</div>
+            <span class="text-xs font-semibold text-brand-400">Crear nodo propio</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING / DEPLOYMENT TIERS -->
+    <section id="pricing" class="py-24 px-6 max-w-7xl mx-auto">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-xs font-mono font-bold uppercase text-brand-400 tracking-widest mb-3">Precios Transparentes</h2>
+        <p class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+          Empieza gratis. Escala sin sorpresas por factura.
+        </p>
+        <p class="text-slate-400 mt-4 text-base">
+          A diferencia de otras plataformas, nosotros no te cobramos por cada paso individual de un flujo.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+        
+        <!-- COMMUNITY SELF-HOSTED -->
+        <div class="rounded-3xl bg-dark-850 border border-dark-700/80 p-8 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-xl font-bold text-white">Community</h3>
+              <span class="text-xs font-mono bg-dark-700 px-2.5 py-1 rounded-full text-slate-300">Self-Hosted</span>
+            </div>
+            <p class="text-xs text-slate-400 mb-6">Para desarrolladores y equipos que quieren control total en sus servidores.</p>
+            <div class="flex items-baseline gap-1 mb-8">
+              <span class="text-4xl font-extrabold text-white">$0</span>
+              <span class="text-slate-400 text-sm">/ para siempre</span>
+            </div>
+            <ul class="space-y-3.5 text-xs text-slate-300 mb-8">
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> <strong>Ejecuciones ilimitadas</strong></li>
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Acceso a todos los 450+ nodos</li>
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Código fuente en GitHub</li>
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Soporte de la comunidad Discord</li>
+            </ul>
+          </div>
+          <a href="#quickstart" class="w-full py-3 rounded-xl bg-dark-800 hover:bg-dark-700 border border-dark-700 text-white font-semibold text-center text-xs transition-colors">
+            Ver Guía de Despliegue
+          </a>
+        </div>
+
+        <!-- CLOUD STARTER (POPULAR) -->
+        <div class="rounded-3xl bg-gradient-to-b from-dark-800 to-dark-850 border-2 border-brand-500/80 p-8 flex flex-col justify-between relative shadow-2xl shadow-brand-500/10">
+          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-brand-500 text-white font-semibold text-[11px] tracking-wide uppercase">
+            Más Popular
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-xl font-bold text-white">Cloud Pro</h3>
+              <span class="text-xs font-mono bg-brand-500/20 text-brand-400 px-2.5 py-1 rounded-full">Gestionado</span>
+            </div>
+            <p class="text-xs text-slate-400 mb-6">Nosotros nos encargamos del mantenimiento, escalado y alta disponibilidad.</p>
+            <div class="flex items-baseline gap-1 mb-8">
+              <span class="text-4xl font-extrabold text-white">$24</span>
+              <span class="text-slate-400 text-sm">/ mes</span>
+            </div>
+            <ul class="space-y-3.5 text-xs text-slate-300 mb-8">
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-brand-400"></i> <strong>25,000 ejecuciones de flujo</strong> / mes</li>
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-brand-400"></i> Flujos y usuarios ilimitados</li>
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-brand-400"></i> Nodos de IA con clave gestionada</li>
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-brand-400"></i> Backups automáticos diarios</li>
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-brand-400"></i> Soporte prioritario por email</li>
+            </ul>
+          </div>
+          <a href="#signup" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-semibold text-center text-xs shadow-lg shadow-brand-500/25 transition-all">
+            Empezar Prueba Gratis de 14 Días
+          </a>
+        </div>
+
+        <!-- ENTERPRISE -->
+        <div class="rounded-3xl bg-dark-850 border border-dark-700/80 p-8 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-xl font-bold text-white">Enterprise</h3>
+              <span class="text-xs font-mono bg-dark-700 px-2.5 py-1 rounded-full text-slate-300">Custom</span>
+            </div>
+            <p class="text-xs text-slate-400 mb-6">Para organizaciones con requisitos estrictos de seguridad, SSO y SLA.</p>
+            <div class="flex items-baseline gap-1 mb-8">
+              <span class="text-4xl font-extrabold text-white">Custom</span>
+            </div>
+            <ul class="space-y-3.5 text-xs text-slate-300 mb-8">
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> SAML SSO, SCIM y RBAC granular</li>
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Entornos de Staging y Producción</li>
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> SLA del 99.99% garantizado</li>
+              <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Ingeniero de soporte dedicado</li>
+            </ul>
+          </div>
+          <a href="#contact" class="w-full py-3 rounded-xl bg-dark-800 hover:bg-dark-700 border border-dark-700 text-white font-semibold text-center text-xs transition-colors">
+            Hablar con Ventas
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FAQ ACCORDION -->
+    <section class="py-20 px-6 max-w-4xl mx-auto border-t border-dark-700/60">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white text-center mb-10">Preguntas Frecuentes</h2>
+
+      <div class="space-y-4">
+        
+        <details class="group bg-dark-850 border border-dark-700 rounded-2xl p-5 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+          <summary class="flex items-center justify-between font-semibold text-white text-sm">
+            <span>¿En qué se diferencia NexusFlow de Zapier o Make?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-slate-400 text-xs mt-3 leading-relaxed">
+            NexusFlow te permite autohospedar el motor en tus propios servidores, lo que significa ejecuciones ilimitadas sin pagar por cada "tarea" o paso. Además, puedes escribir código nativo en JavaScript o Python, integrar agentes de IA con memoria vectorial y nunca compartes tus datos sensibles con terceros.
+          </p>
+        </details>
+
+        <details class="group bg-dark-850 border border-dark-700 rounded-2xl p-5 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+          <summary class="flex items-center justify-between font-semibold text-white text-sm">
+            <span>¿Es realmente gratis la versión autohospedada?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-slate-400 text-xs mt-3 leading-relaxed">
+            Sí. La edición Community tiene licencia Fair-Code, puedes descargar la imagen de Docker, ejecutarla en tu servidor local o en la nube y usarla sin pagar ninguna licencia mensual.
+          </p>
+        </details>
+
+        <details class="group bg-dark-850 border border-dark-700 rounded-2xl p-5 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+          <summary class="flex items-center justify-between font-semibold text-white text-sm">
+            <span>¿Cómo funcionan los nodos de Agentes IA?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-slate-400 text-xs mt-3 leading-relaxed">
+            Cada nodo de IA puede configurarse como un agente autónomo. Puedes asignarle "herramientas" (que pueden ser otros flujos de NexusFlow, consultas SQL o llamadas HTTP) y conectarle bases de datos vectoriales para que tome decisiones complejas y consulte información interna de tu empresa.
+          </p>
+        </details>
+
+      </div>
+    </section>
+
+    <!-- FOOTER CTA -->
+    <section class="py-20 px-6 bg-gradient-to-b from-dark-900 to-dark-950 border-t border-dark-700/60 relative overflow-hidden text-center">
+      <div class="max-w-3xl mx-auto relative z-10">
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+          Comienza a automatizar en menos de 2 minutos
+        </h2>
+        <p class="text-slate-400 text-base mb-8">
+          Descarga la imagen Docker o crea una cuenta en la nube sin tarjeta de crédito.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="#signup" class="px-8 py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-semibold text-sm shadow-xl shadow-brand-500/30 transition-all">
+            Crear Cuenta Cloud Gratis
+          </a>
+          <a href="https://github.com" target="_blank" class="px-8 py-3.5 rounded-xl bg-dark-800 hover:bg-dark-700 border border-dark-700 text-slate-300 font-semibold text-sm flex items-center gap-2 transition-colors">
+            <i data-lucide="github" class="w-4 h-4"></i>
+            Ver Repositorio en GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="py-12 px-6 border-t border-dark-800 text-xs text-slate-500 bg-dark-950">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-6 h-6 rounded-lg bg-brand-500 flex items-center justify-center text-white">
+          <i data-lucide="git-merge" class="w-3.5 h-3.5"></i>
+        </div>
+        <span class="font-bold text-slate-300">NexusFlow Engine</span>
+        <span>© 2026 NexusFlow Inc. Código Abierto bajo licencia Fair-Code.</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="#" class="hover:text-slate-300 transition-colors">Documentación</a>
+        <a href="#" class="hover:text-slate-300 transition-colors">Términos de Servicio</a>
+        <a href="#" class="hover:text-slate-300 transition-colors">Privacidad</a>
+        <a href="#" class="hover:text-slate-300 transition-colors">Discord</a>
+        <a href="#" class="hover:text-slate-300 transition-colors">Twitter / X</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- INTERACTIVE SCRIPT -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // MOCK DATA PAYLOADS PER NODE
+    const nodeData = {
+      webhook: {
+        title: "Stripe Webhook (Trigger)",
+        json: {
+          "event": "customer.subscription.created",
+          "customer": {
+            "name": "Acme Corp",
+            "email": "carlos@acmecorp.io",
+            "plan": "Enterprise Scale",
+            "mrr_usd": 2400
+          },
+          "timestamp": "2026-11-19T22:30:00Z"
+        }
+      },
+      ai: {
+        title: "Clasificador Gemini (Agente IA)",
+        json: {
+          "model": "gemini-1.5-pro",
+          "prompt_tokens": 340,
+          "decision": {
+            "lead_score": 96,
+            "category": "High-Value Enterprise",
+            "recommended_action": "alert_senior_account_exec",
+            "reasoning": "Suscripción Enterprise con MRR > 2000 USD y dominio corporativo verificado."
+          }
+        }
+      },
+      router: {
+        title: "Filtro de Prioridad (Switch / If)",
+        json: {
+          "condition": "data.decision.lead_score >= 85",
+          "evaluated": true,
+          "route_selected": "branch_vip_slack",
+          "secondary_route": "branch_database_sync"
+        }
+      },
+      slack: {
+        title: "Canal #ventas-leads (Slack Notifier)",
+        json: {
+          "channel": "#ventas-leads",
+          "message": "🔥 *Nuevo Lead VIP Detectado*: Acme Corp ($2,400 MRR) clasificado por IA con score 96.",
+          "status": "delivered",
+          "message_id": "msg_894123"
+        }
+      },
+      postgres: {
+        title: "Guardar en Postgres (Database Insert)",
+        json: {
+          "query": "INSERT INTO crm_qualified_leads (company, score, mrr) VALUES ($1, $2, $3)",
+          "rows_affected": 1,
+          "status": "committed"
+        }
+      }
+    };
+
+    function selectNode(nodeKey) {
+      const data = nodeData[nodeKey];
+      if (!data) return;
+
+      document.getElementById('selected-node-title').textContent = data.title;
+      document.getElementById('json-viewer').textContent = JSON.stringify(data.json, null, 2);
+
+      // Highlight selected node border
+      document.querySelectorAll('.node-card').forEach(n => n.classList.remove('border-brand-500', 'border-purple-500', 'border-emerald-500'));
+      const activeEl = document.getElementById(`node-${nodeKey}`);
+      if (activeEl) {
+        activeEl.classList.add('border-brand-500');
+      }
+    }
+
+    // SIMULATION RUNNER
+    let isRunning = false;
+
+    async function runWorkflowSimulation() {
+      if (isRunning) return;
+      isRunning = true;
+
+      const execStatus = document.getElementById('exec-status');
+      const runBtn = document.getElementById('run-flow-btn');
+      runBtn.classList.add('opacity-50', 'pointer-events-none');
+
+      // Helper to activate node visually
+      const activateNode = (id, badgeId, colorClass) => {
+        const el = document.getElementById(id);
+        const badge = document.getElementById(badgeId);
+        el.classList.add('scale-[1.03]', 'shadow-2xl');
+        badge.className = `w-2.5 h-2.5 rounded-full ${colorClass} animate-ping`;
+      };
+
+      const resetNode = (id, badgeId) => {
+        const el = document.getElementById(id);
+        const badge = document.getElementById(badgeId);
+        el.classList.remove('scale-[1.03]', 'shadow-2xl');
+        badge.className = `w-2 h-2 rounded-full bg-slate-600`;
+      };
+
+      // STEP 1: Webhook Trigger
+      execStatus.innerHTML = '<span class="text-brand-400">Paso 1: Recibiendo Webhook de Stripe...</span>';
+      selectNode('webhook');
+      activateNode('node-1', 'badge-1', 'bg-brand-500');
+      document.getElementById('pulse-1').classList.remove('opacity-0');
+      await wait(1200);
+
+      // STEP 2: AI Agent
+      execStatus.innerHTML = '<span class="text-purple-400">Paso 2: Agente Gemini evaluando lead...</span>';
+      selectNode('ai');
+      activateNode('node-2', 'badge-2', 'bg-purple-500');
+      document.getElementById('pulse-2').classList.remove('opacity-0');
+      await wait(1400);
+
+      // STEP 3: Router
+      execStatus.innerHTML = '<span class="text-amber-400">Paso 3: Evaluando condición (Score 96 &gt; 85)...</span>';
+      selectNode('router');
+      activateNode('node-3', 'badge-3', 'bg-amber-500');
+      document.getElementById('pulse-3a').classList.remove('opacity-0');
+      document.getElementById('pulse-3b').classList.remove('opacity-0');
+      await wait(1000);
+
+      // STEP 4: Output Branches
+      execStatus.innerHTML = '<span class="text-emerald-400">Paso 4: Notificando Slack y guardando en Postgres...</span>';
+      selectNode('slack');
+      activateNode('node-4a', 'badge-4a', 'bg-emerald-500');
+      activateNode('node-4b', 'badge-4b', 'bg-sky-500');
+      await wait(1200);
+
+      execStatus.innerHTML = '<span class="text-emerald-400 font-bold">✔ Flujo ejecutado con éxito en 3.8s</span>';
+      runBtn.classList.remove('opacity-50', 'pointer-events-none');
+      isRunning = false;
+    }
+
+    function resetWorkflowSimulation() {
+      ['node-1', 'node-2', 'node-3', 'node-4a', 'node-4b'].forEach((id, i) => {
+        const badgeIds = ['badge-1', 'badge-2', 'badge-3', 'badge-4a', 'badge-4b'];
+        const el = document.getElementById(id);
+        const badge = document.getElementById(badgeIds[i]);
+        if (el) el.classList.remove('scale-[1.03]', 'shadow-2xl', 'border-brand-500');
+        if (badge) badge.className = 'w-2 h-2 rounded-full bg-slate-600';
+      });
+
+      ['pulse-1', 'pulse-2', 'pulse-3a', 'pulse-3b'].forEach(pid => {
+        const p = document.getElementById(pid);
+        if (p) p.classList.add('opacity-0');
+      });
+
+      document.getElementById('exec-status').textContent = 'Listo para ejecutar';
+      selectNode('webhook');
+    }
+
+    function wait(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // COPY DOCKER COMMAND
+    function copyDockerCommand() {
+      const cmd = "docker run -it --rm --name nexusflow -p 5678:5678 -v ~/.nexusflow:/root/.nexusflow nexusflow/nexusflow";
+      navigator.clipboard.writeText(cmd).then(() => {
+        const copyText = document.getElementById('copy-text');
+        copyText.textContent = "¡Copiado!";
+        setTimeout(() => {
+          copyText.textContent = "Copiar comando";
+        }, 2500);
+      });
+    }
+  </script>
+</body>
+</html>
